@@ -39,6 +39,19 @@ AllStart.sh
 <br>
 <br>
 
+### Api
+
+| api | Service |
+| :----: | :----: |
+| localhost:80 | Gateway (Not Found) |
+| localhost:80/rbac | Service-RBAC |
+| localhost:80/sms | Service-SMS |
+| localhost:80/rbac/sms | RBAC -> SMS1 / SMS2 |
+| localhost: each service port | not allow |
+
+<br>
+<br>
+
 ### Best Further
 1. Nacos Cluster with Nginx
 1. Gateway Cluster
