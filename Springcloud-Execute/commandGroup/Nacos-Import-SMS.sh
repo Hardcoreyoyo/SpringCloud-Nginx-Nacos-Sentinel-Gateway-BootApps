@@ -23,16 +23,15 @@ do
         do
             check=$(curl -s -X POST 'http://localhost:8848/nacos/v1/cs/configs' -d 'dataId=Service-SMS-dev.yaml&group=HARDCOREYOYO_GROUP&type=yaml&content='"${import}")
             if [[ $check -eq true ]]; then
-                echo SMS Config 上傳成功
+                echo SMS Config upload success
                 break
             else
-                echo SMS Config 沒有上傳成功
                 sleep 2
             fi                    
         done
         break
     else
-        echo 嘗試連線 Nacos 中...
+        echo connect Nacos ...
         sleep 4
     fi
 done

@@ -32,16 +32,15 @@ do
         do
             check=$(curl -s -X POST 'http://localhost:8848/nacos/v1/cs/configs' -d 'dataId=SpringCloud-Gateway-dev.yaml&group=HARDCOREYOYO_GROUP&type=yaml&content='"${import}")
             if [[ $check -eq true ]]; then
-                echo Gateway Config 上傳成功
+                echo Gateway Config upload success
                 break
             else
-                echo Gateway Config 沒有上傳成功
                 sleep 2
             fi                    
         done
         break
     else
-        echo 嘗試連線 Nacos 中...
+        echo connect Nacos ...
         sleep 4
     fi
 done
