@@ -1,0 +1,118 @@
+version: '3'
+
+services:
+
+  sentinel:
+    image: bladex/sentinel-dashboard:1.8.0
+    container_name: docker-sentinel
+    environment:
+      - SERVER_PORT=8858
+    ports:
+      - 8858:8858
+    restart: always
+    networks:
+      - serviceNet5
+
+  nacos:
+    image: nacos/nacos-server:v2.0.4
+    container_name: docker-nacos
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone 
+      - JVM_XMS=256m 
+      - JVM_XMX=256m 
+      - JVM_XMN=128m 
+    ports:
+      - "8848:8848"
+    restart: always
+    networks:
+      - serviceNet5
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    command: ["/app/wait-for.sh", "nacos:8848", "--", "java", "-jar", "/app/SpringCloudGateway-SCG1.0.0.jar"]
+    environment:
+      - SERVER_PORT=8787
+      - DISCOVERY_PORT=8787
+      - SPRING_PROFILES_ACTIVE=dev
+    container_name: docker-gateway
+    depends_on:
+      - nacos
+      - sentinel
+    restart: always
+    networks:
+      - serviceNet5
+
+  rbac:
+    build:
+      context: ./RBAC
+      dockerfile: Dockerfile
+    command: ["/app/wait-for.sh", "nacos:8848", "--", "java", "-jar", "/app/SpringCloudEurekaServiceRBAC-ServiceRBAC1.0.0.jar"]
+    environment:
+      - SERVER_PORT=8401
+      - DISCOVERY_PORT=8401
+      - SPRING_PROFILES_ACTIVE=dev
+    container_name: docker-rbac
+    depends_on:
+      - nacos
+      - sentinel
+    restart: always
+    networks:
+      - serviceNet5
+
+  sms1:
+    build:
+      context: ./SMS/sms_master
+      dockerfile: Dockerfile
+    command: ["/app/wait-for.sh", "nacos:8848", "--", "java", "-jar", "/app/ServiceSMS-SSMS1.0.0.jar"]
+    environment:
+      - SERVER_PORT=8402
+      - DISCOVERY_PORT=8402
+      - SPRING_PROFILES_ACTIVE=dev
+    container_name: docker-sms-master
+    depends_on:
+      - nacos
+      - sentinel
+    restart: always
+    networks:
+      - serviceNet5
+
+  sms2:
+    build:
+      context: ./SMS/sms_backup
+      dockerfile: Dockerfile
+    command: ["/app/wait-for.sh", "nacos:8848", "--", "java", "-jar", "/app/ServiceSMS-SSMS1.0.0.jar"]
+    environment:
+      - SERVER_PORT=8412
+      - DISCOVERY_PORT=8412
+      - SPRING_PROFILES_ACTIVE=dev
+    container_name: docker-sms-backup
+    depends_on:
+      - nacos
+      - sentinel
+    restart: always
+    networks:
+      - serviceNet5
+
+  nginx:
+    image: nginx:alpine
+    container_name: docker-nginx
+    depends_on:
+      - nacos
+      - sentinel
+      - gateway
+      - rbac
+      - sms1
+      - sms2
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-data/conf.d:/etc/nginx/conf.d
+    networks:
+      - serviceNet5
+
+networks:
+  serviceNet5:
+    driver: bridge
