@@ -20,15 +20,13 @@
 | SpringCloud Alibab | 2.2.1.RELEASE |
 | Nacos | v2.0.4 |
 | Sentinel Dashboard | 1.8.0 |
-| Nginx| 1.21.6 |
+| Maven| 3 |
+| Docker| v20.10.10 |
 
 <br>
 <br>
 
 ### Execute
-```
-Package Project each Module and put each Folder
-```
 ```
 cd Springcloud-Execute
 ```
@@ -58,4 +56,5 @@ AllStart.sh
 1. Nacos Cluster with Nginx
 1. Gateway Cluster
 1. Nginx Cluster with KeepAlive
+
 ![](./images/bestFuther.png)
