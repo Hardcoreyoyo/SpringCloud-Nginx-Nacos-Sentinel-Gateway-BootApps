@@ -17,7 +17,7 @@
 | SpringCloud | Hoxton.SR3 |
 | SpringBoot | 2.2.5.RELEASE |
 | SpringCloud Gateway | 2.2.2.RELEASE |
-| SpringCloud Alibab | 2.2.1.RELEASE |
+| SpringCloud Alibaba | 2.2.1.RELEASE |
 | Nacos | v2.0.4 |
 | Sentinel Dashboard | 1.8.0 |
 | Maven| 3 |
