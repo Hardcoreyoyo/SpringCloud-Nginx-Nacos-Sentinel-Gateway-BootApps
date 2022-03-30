@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd ../
-
 path=`pwd`
 
 mvn -f ./SpringCloud-Source/ServiceRBAC package 
