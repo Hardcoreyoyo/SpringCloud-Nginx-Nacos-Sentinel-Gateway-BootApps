@@ -28,7 +28,7 @@
 
 ### Execute
 ```
-cd Springcloud-Execute
+cd SpringCloud-Nginx-Nacos-Sentinel-Gateway-BootApps-master
 ```
 ```
 AllStart.sh
