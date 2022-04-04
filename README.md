@@ -41,10 +41,10 @@ AllStart.sh
 
 | api | Service |
 | :----: | :----: |
-| localhost:80 | Gateway (Not Found) |
-| localhost:80/rbac | Service-RBAC |
-| localhost:80/sms | Service-SMS |
-| localhost:80/rbac/sms | RBAC -> SMS1 / SMS2 |
+| localhost:80 | Nginx |
+| /rbac | Service-RBAC |
+| /sms | Service-SMS |
+| /rbac/sms | RBAC -> SMS1 / SMS2 |
 | localhost: each service port | not allow |
 | localhost:8848/nacos/ | Nacos DashBoard (signin nacos:nacos) |
 | localhost:8858 | Sentinel DashBoard (signin sentinel:sentinel ) |
